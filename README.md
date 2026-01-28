@@ -1,4 +1,15 @@
-## 1. **What are the advantages of using TypeScript over JavaScript?**
+# TypeScript Interview Questions (2025–2026)
+
+### Table of Contents
+1. [Advantages of using TypeScript over JavaScript?](#1-advantages-of-using-typescript-over-javascript)
+2. [Difference between any, unknown, and never types?](#2-difference-between-any-unknown-and-never-types)
+3. [How do you define an interface in TypeScript?](#3-how-do-you-define-an-interface-in-typescript)
+4. [What is Type Inference?](#4-what-is-type-inference)
+5. [Difference between interface and type](#5-difference-between-interface-and-type)
+6. [What is a union type?](#6-what-is-a-union-type)
+7. [What are generics in TypeScript?](#7-what-are-generics-in-typescript)
+
+## 1. **Advantages of using TypeScript over JavaScript?**
 - Static type checking
 
 - Better tooling (e.g., autocompletion, refactoring)
@@ -9,9 +20,9 @@
 
 - Supports modern JavaScript features and transpiles to older versions
 
-<br>
 
-## 2. **What is the difference between any, unknown, and never types?**
+
+## 2. **Difference between any, unknown, and never types?**
 
 ### ***`any` - Opt-out of type checking (unsafe)***
 ```jsx
@@ -95,9 +106,8 @@ message = 123;
 // ❌ Error: Type 'number' is not assignable to type 'string'
 ```
 
-<br>
 
-## 5. **Explain the difference between interface and type?**
+## 5. **Difference between interface and type?**
 Both define object shapes.
 
 interface is extendable and ideal for OOP-style code.
