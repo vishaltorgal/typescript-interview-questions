@@ -8,6 +8,9 @@
 5. [Difference between interface and type](#5-difference-between-interface-and-type)
 6. [What is a union type?](#6-what-is-a-union-type)
 7. [What are generics in TypeScript?](#7-what-are-generics-in-typescript)
+8. [What are mapped types?](#8-what-are-mapped-types)
+9. [What is keyof and typeof in TypeScript?](#9-what-is-keyof-andtypeof-in-typeScript)
+10. [What is declaration merging in TypeScript?](#10-what-is-declaration-merging-in-typeScript)
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
 - Static type checking
