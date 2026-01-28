@@ -80,7 +80,7 @@ function getArea(shape: Shape) {
   }
 }
 ```
-<br>
+
 
 ## 3. **How do you define an interface in TypeScript?**
 ```jsx
@@ -90,7 +90,7 @@ interface User {
   isAdmin?: boolean; // optional
 }
 ```
-<br>
+
   
 ## 4. **What is Type Inference?**
 Type inference is TypeScript’s ability to automatically determine the type of a variable or expression without explicitly specifying it.
@@ -143,7 +143,7 @@ type Admin = User & {
 - Use **interface** when defining object shapes, especially for public APIs and class structures.
 - Use **type** when combining types (e.g., unions, intersections, primitives).
   
-<br>
+
 
 ## 6. **What is a union type?**
 Allows a variable to hold multiple types
@@ -153,7 +153,7 @@ let value: string | number;
 value = "text";
 value = 10;
 ```
-<br>
+
 
 ## 7. **What are generics in TypeScript?**
 Generics allow you to create reusable and type-safe components, functions, or classes that work with different data types without losing type information.
@@ -206,17 +206,108 @@ const numberBox: Box<number> = { content: 123 };
 
 ```
 
-<br>
-
 ## 8. **What are mapped types?**
+Mapped types let you create new types by looping over the keys of an existing type and transforming them.
 
-<br>
+```jsx
+type NewType = {
+  [Key in ExistingType]: NewValue
+}
+
+```
+
+```jsx
+type User = {
+  id: number
+  name: string
+  isAdmin: boolean
+}
+
+type ReadonlyUser = {
+  [K in keyof User]: User[K]
+}
+
+//This copies all keys from User.
+```
+```jsx
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+// Mapped Type: Make everything a boolean
+type UserOptions = {
+  [K in keyof User]: boolean;
+};
+
+/* Resulting Type:
+{
+  id: boolean;
+  name: boolean;
+  email: boolean;
+}
+*/
+```
+
 
 ## 9. **What is keyof and typeof in TypeScript?**
 
-<br>
+`typeof` is used in a type context to extract the type of a variable or property so you can use it elsewhere.
+
+```jsx
+const point = { x: 10, y: 20 };
+
+// Create a type that matches the shape of 'point'
+type Point = typeof point; 
+
+/* Resulting Type:
+type Point = { x: number; y: number; }
+*/
+
+function move(p: Point) {
+    console.log(`Moving to ${p.x}, ${p.y}`);
+}
+```
+`keyof` operator takes an object type and produces a string or numeric literal union of its keys.
+
+***When to use it:*** When you want to ensure a value matches one of the property names of an object.
+
+```jsx
+interface Car {
+    make: string;
+    model: string;
+    year: number;
+}
+
+// Extract the keys of Car
+type CarProperty = keyof Car; 
+
+// Resulting Type: "make" | "model" | "year"
+
+let myProperty: CarProperty = "make"; // Valid
+// let myProperty: CarProperty = "color"; // Error! "color" doesn't exist on Car.
+```
 
 ## 10. **What is declaration merging in TypeScript?**
 
-<br>
+Declaration merging means TypeScript automatically combines multiple declarations with the same name into a single definition.
+
+```jsx
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+// Resulting merged interface:
+// interface User { name: string; age: number; }
+
+const person: User = {
+  name: "Alex",
+  age: 30
+};
+```
 
