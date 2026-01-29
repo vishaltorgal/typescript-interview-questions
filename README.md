@@ -9,8 +9,13 @@
 6. [What is a union type?](#6-what-is-a-union-type)
 7. [What are generics in TypeScript?](#7-what-are-generics-in-typescript)
 8. [What are mapped types?](#8-what-are-mapped-types)
-9. [What is keyof and typeof in TypeScript?](#9-what-is-keyof-andtypeof-in-typeScript)
-10. [What is declaration merging in TypeScript?](#10-what-is-declaration-merging-in-typeScript)
+9. [What is keyof and typeof in TypeScript?](#9-what-is-keyof-and-typeof-in-typescript)
+10. [What is declaration merging in TypeScript?](#10-what-is-declaration-merging-in-typescript)
+11. [What are union and intersection types?](#11-what-are-union-and-intersection-types)
+12. [Difference between readonly and const?](#12-difference-between-readonly-and-const)
+13. [What is as type assertion?](#13-what-is-as-type-assertion)
+14. [Example]-(#14-example)
+15. [Example]-(#15-example)
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
 - Static type checking
@@ -314,3 +319,102 @@ const person: User = {
 };
 ```
 
+## 11. **What are union and intersection types?**
+
+- Union (|) allows multiple types
+- Intersection (&) combines multiple types
+
+```jsx
+type Status = "success" | "error"
+
+type User = { name: string }
+type Admin = { role: string }
+
+type AdminUser = User & Admin
+```
+
+## 12. **Difference between readonly and const?**
+
+- `const` prevents variable reassignment
+- `readonly` prevents property modification
+
+```jsx
+const x = 10
+
+interface User {
+  readonly id: number
+}
+```
+
+## 13. **What is as type assertion?**
+
+Forces TypeScript to treat a value as a specific type.
+
+```jsx
+let value: unknown = "hello"
+let str = value as string
+
+```
+
+
+## 14. **Example**
+
+***Without TypeScript (JavaScript)***
+```jsx
+//User Login Function
+function login(user) {
+  console.log(user.email.toLowerCase())
+}
+
+login({ email: 123 }) // Runtime error
+
+```
+❌ Error happens only at runtime because email is not a string.
+
+***With TypeScript***
+```jsx
+type User = {
+  email: string
+  password: string
+}
+
+function login(user: User) {
+  console.log(user.email.toLowerCase())
+}
+
+login({ email: 123, password: "abc" }) // Compile-time error
+
+```
+✅ TypeScript catches the mistake before running the code.
+## 15. **Example**
+
+***Problem in JavaScript***
+```jsx
+//API Response Handling
+fetch("/api/user")
+  .then(res => res.json())
+  .then(data => {
+    console.log(data.name.toUpperCase())
+  })
+
+```
+If name is missing or not a string → ❌ runtime error.
+
+***With TypeScript***
+```jsx
+type ApiUser = {
+  id: number
+  name: string
+  email: string
+}
+
+async function getUser(): Promise<ApiUser> {
+  const res = await fetch("/api/user")
+  return res.json()
+}
+
+getUser().then(user => {
+  console.log(user.name.toUpperCase()) // safe
+})
+
+```
