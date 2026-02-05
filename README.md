@@ -226,49 +226,39 @@ const firstString = getFirstElement(["a", "b", "c"]); // T = string
 <br>
 
 ## 8. **What are mapped types?**
+
 Mapped types let you create new types by looping over the keys of an existing type and transforming them.
 
-```jsx
-type NewType = {
-  [Key in ExistingType]: NewValue
-}
-
-```
-
+***normal type***
 ```jsx
 type User = {
   id: number
   name: string
-  isAdmin: boolean
 }
-
-type ReadonlyUser = {
-  [K in keyof User]: User[K]
-}
-
-//This copies all keys from User.
 ```
+
+***Mapped type***
 ```jsx
-interface User {
-  id: number;
-  name: string;
-  email: string;
+type ReadOnlyUser = {
+  readonly [K in keyof User]: User[K]
 }
-
-// Mapped Type: Make everything a boolean
-type UserOptions = {
-  [K in keyof User]: boolean;
-};
-
-/* Resulting Type:
-{
-  id: boolean;
-  name: boolean;
-  email: boolean;
-}
-*/
 ```
 
+***Read it in plain English***
+- `keyof User` → "id" | "name"
+- `K in keyof User` → “for each key in User”
+- `User[K]` → “use the same type as original”
+- `readonly` → “make it read-only”
+
+***👉 Result***
+```jsx
+{
+  readonly id: number
+  readonly name: string
+}
+```
+
+<br>
 
 ## 9. **What is keyof and typeof in TypeScript?**
 
