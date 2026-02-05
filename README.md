@@ -262,41 +262,50 @@ type ReadOnlyUser = {
 
 ## 9. **What is keyof and typeof in TypeScript?**
 
-`typeof` is used in a type context to extract the type of a variable or property so you can use it elsewhere.
+## typeof
+`typeof` is used to get the type of an existing variable, object, or function so it can be reused as a type.
 
+***Get type of a variable***
 ```jsx
-const point = { x: 10, y: 20 };
-
-// Create a type that matches the shape of 'point'
-type Point = typeof point; 
-
-/* Resulting Type:
-type Point = { x: number; y: number; }
-*/
-
-function move(p: Point) {
-    console.log(`Moving to ${p.x}, ${p.y}`);
-}
+const count = 10
+type CountType = typeof count // number
 ```
-`keyof` operator takes an object type and produces a string or numeric literal union of its keys.
 
-***When to use it:*** When you want to ensure a value matches one of the property names of an object.
-
+***Get type of a function***
 ```jsx
-interface Car {
-    make: string;
-    model: string;
-    year: number;
+function add(a: number, b: number) {
+  return a + b
 }
 
-// Extract the keys of Car
-type CarProperty = keyof Car; 
+type AddType = typeof add
+// (a: number, b: number) => number
 
-// Resulting Type: "make" | "model" | "year"
-
-let myProperty: CarProperty = "make"; // Valid
-// let myProperty: CarProperty = "color"; // Error! "color" doesn't exist on Car.
 ```
+***typeof*** in JavaScript gives the runtime type
+
+## keyof
+The ***keyof*** operator takes an object type and produces a union of its keys. 
+
+Think of it as a way to say: "This variable must be one of the property names from that object."
+
+
+```jsx
+type User = {
+  id: number
+  name: string
+  isActive: boolean
+}
+```
+
+```jsx
+function getValue(obj: User, key: keyof User) {
+  return obj[key]
+}
+
+getValue(user, "name")      // valid
+getValue(user, "email")    // error ❌
+```
+
 
 ## 10. **What is declaration merging in TypeScript?**
 
@@ -325,14 +334,27 @@ const person: User = {
 - Union (|) allows multiple types
 - Intersection (&) combines multiple types
 
+***Union***
 ```jsx
 type Status = "success" | "error"
-
-type User = { name: string }
-type Admin = { role: string }
-
-type AdminUser = User & Admin
 ```
+
+***Intersection***
+```jsx
+type Person = {  name: string}
+type Employee = { id: number}
+
+type PersonEmployee = Person & Employee
+```
+***Result***
+```jsx
+{
+  name: string
+  id: number
+}
+```
+
+<br>
 
 ## 12. **Difference between readonly and const?**
 
@@ -347,16 +369,22 @@ interface User {
 }
 ```
 
+<br>
+
 ## 13. **What is as type assertion?**
 
 Forces TypeScript to treat a value as a specific type.
 
 ```jsx
-let value: unknown = "hello"
-let str = value as string
-
+let value: any = "Hello"
+let length = (value as string).length
 ```
+Here we tell TypeScript:
+👉 “value is a string.”
 
+```jsx
+let str = value as string
+```
 
 ## 14. **Example**
 
