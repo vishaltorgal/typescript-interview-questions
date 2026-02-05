@@ -18,16 +18,15 @@
 15. [Example](#15-example)
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
-- Static type checking
 
-- Better tooling (e.g., autocompletion, refactoring)
+- ***Static type checking*** : Ensures variables and functions use the correct data types at compile time.
+- ***Better tooling (e.g., autocompletion, refactoring)*** : Provides powerful IDE support with smart suggestions and safe code transformations.
 
-- Improved code readability and maintainability
+- ***Improved code readability and maintainability*** : Makes code easier to understand and manage by clearly defining data structures and intent.
 
-- Early error detection
+- ***Early error detection*** : Catches bugs during development before the code runs in production.
 
-- Supports modern JavaScript features and transpiles to older versions
-
+- ***Safer refactoring*** : Rename a variable or change a function signature and TypeScript tells you everywhere it breaks. No guessing, no fear.
 
 
 ## 2. **Difference between any, unknown, and never types?**
@@ -101,7 +100,8 @@ interface User {
 
   
 ## 4. **What is Type Inference?**
-Type inference is TypeScript’s ability to automatically determine the type of a variable or expression without explicitly specifying it.
+
+***Type inference*** is TypeScript’s ability to automatically determine the type of a variable or expression without explicitly specifying it.
 
 When you assign a value to a variable, TypeScript infers the type based on the value.
 
@@ -151,7 +151,21 @@ type Admin = User & {
 - Use **interface** when defining object shapes, especially for public APIs and class structures.
 - Use **type** when combining types (e.g., unions, intersections, primitives).
   
+- Interfaces allow ***Declaration Merging***. If you define two interfaces with the same name, TypeScript automatically merges them into one.
+- ***Types*** do not allow this and will throw an error if you try to define the same name twice.
 
+```jsx
+// Interfaces merge
+interface User { name: string; }
+interface User { age: number; }
+// User now has both name and age
+
+// Types do not merge
+type Admin = { name: string; }
+type Admin = { role: string; } // Error: Duplicate identifier 'Admin'
+```
+
+<br>
 
 ## 6. **What is a union type?**
 Allows a variable to hold multiple types
@@ -162,22 +176,28 @@ value = "text";
 value = 10;
 ```
 
+<br>
 
 ## 7. **What are generics in TypeScript?**
-Generics allow you to create reusable and type-safe components, functions, or classes that work with different data types without losing type information.
+***Generics*** are a tool for creating reusable components. They allow you to write code that works with a variety of types rather than a single one, without losing the benefits of type safety.
 
 Think of generics like placeholders for types.
 
 ### *** Example: Generic Function***
 ```jsx
 function identity<T>(value: T): T {
-  return value;
+  return value
 }
 
-const numberResult = identity<number>(10);      // T = number
-const stringResult = identity<string>("hello"); // T = string
-
+identity<number>(10)
+identity<string>("hello")
 ```
+
+1️⃣ <T> - Declares a generic type parameter named T.
+2️⃣ value: T - Specifies that the parameter value must be of type T.
+3️⃣ : T - Specifies that the return value will also be of type T.
+
+***<T> defines the generic type, value: T accepts that type, and : T returns the same type.***
 
 📌 T is a type variable – it holds the place for the actual type passed during function call.
 
@@ -203,16 +223,7 @@ const firstString = getFirstElement(["a", "b", "c"]); // T = string
 
 ```
 
-### ***Generic Interface Example***
-```jsx
-interface Box<T> {
-  content: T;
-}
-
-const stringBox: Box<string> = { content: "books" };
-const numberBox: Box<number> = { content: 123 };
-
-```
+<br>
 
 ## 8. **What are mapped types?**
 Mapped types let you create new types by looping over the keys of an existing type and transforming them.
