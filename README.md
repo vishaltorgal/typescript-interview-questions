@@ -15,7 +15,7 @@
 12. [Difference between readonly and const?](#12-difference-between-readonly-and-const)
 13. [What is as type assertion?](#13-what-is-as-type-assertion)
 14. [Example](#14-example)
-15. [Example](#15-example)
+
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
 
