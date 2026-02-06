@@ -388,62 +388,55 @@ let str = value as string
 
 ## 14. **Example**
 
+### ***Example 1***
+
 ***Without TypeScript (JavaScript)***
 ```jsx
-//User Login Function
-function login(user) {
-  console.log(user.email.toLowerCase())
+function addNumbers(a, b) {
+  return a + b;
 }
 
-login({ email: 123 }) // Runtime error
-
+console.log(addNumbers(5, 10)); // 15
+console.log(addNumbers("5", 10)); // "510" (Wait, what?)
 ```
-❌ Error happens only at runtime because email is not a string.
+
 
 ***With TypeScript***
 ```jsx
-type User = {
-  email: string
-  password: string
+function addNumbers(a: number, b: number): number {
+  return a + b;
 }
 
-function login(user: User) {
-  console.log(user.email.toLowerCase())
-}
-
-login({ email: 123, password: "abc" }) // Compile-time error
-
+console.log(addNumbers(5, 10)); // 15
+// console.log(addNumbers("5", 10)); // ERROR: Argument of type 'string' is not assignable to 'number'.
 ```
 ✅ TypeScript catches the mistake before running the code.
-## 15. **Example**
 
-***Problem in JavaScript***
+
+### ***Example 2***
+
+***Without TypeScript (JavaScript)***
 ```jsx
-//API Response Handling
-fetch("/api/user")
-  .then(res => res.json())
-  .then(data => {
-    console.log(data.name.toUpperCase())
-  })
+const user = {
+  name: "Alex",
+  age: 28
+};
 
+// Later in the code...
+console.log(user.nme); // undefined (Easy typo to make!)
 ```
-If name is missing or not a string → ❌ runtime error.
 
 ***With TypeScript***
 ```jsx
-type ApiUser = {
-  id: number
-  name: string
-  email: string
+interface User {
+  name: string;
+  age: number;
 }
 
-async function getUser(): Promise<ApiUser> {
-  const res = await fetch("/api/user")
-  return res.json()
-}
+const user: User = {
+  name: "Alex",
+  age: 28
+};
 
-getUser().then(user => {
-  console.log(user.name.toUpperCase()) // safe
-})
-
+// console.log(user.nme); // ERROR: Property 'nme' does not exist on type 'User'.
 ```
