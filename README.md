@@ -19,15 +19,20 @@
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
 
-- ***Static type checking*** : Ensures variables and functions use the correct data types at compile time.
-- ***Better tooling (e.g., autocompletion, refactoring)*** : Provides powerful IDE support with smart suggestions and safe code transformations.
+| Feature                  | TypeScript                                      | JavaScript                             |
+| ------------------------ | ----------------------------------------------- | -------------------------------------- |
+| **Type Safety**          | Static typing catches errors at compile time    | Errors found only at runtime           |
+| **Error Detection**      | Detects type errors before running code         | Errors appear when code executes       |
+| **Autocompletion**       | Better IntelliSense and suggestions             | Limited editor support                 |
+| **Code Maintainability** | Easier to manage large codebases                | Harder to maintain as project grows    |
+| **Refactoring**          | Safer refactoring with type checks              | Risky changes, may break things        |
+| **Interfaces & Types**   | Supports interfaces, type aliases, generics     | No built-in type system                |
+| **Scalability**          | Designed for large scale applications           | Better suited for small to medium apps |
+| **Documentation**        | Types act as self documentation                 | Requires comments for clarity          |
+| **OOP Features**         | Access modifiers, abstract classes, enums       | Limited OOP structure                  |
+| **Modern JS Support**    | Transpiles modern features to older JS versions | Depends on browser/node support        |
 
-- ***Improved code readability and maintainability*** : Makes code easier to understand and manage by clearly defining data structures and intent.
-
-- ***Early error detection*** : Catches bugs during development before the code runs in production.
-
-- ***Safer refactoring*** : Rename a variable or change a function signature and TypeScript tells you everywhere it breaks. No guessing, no fear.
-
+<br>
 
 ## 2. **Difference between any, unknown, and never types?**
 
