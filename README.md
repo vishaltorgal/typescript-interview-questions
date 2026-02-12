@@ -415,28 +415,55 @@ console.log(addNumbers(5, 10)); // 15
 
 ### ***Example 2***
 
-***Without TypeScript (JavaScript)***
+## 📁 Project Structure
 ```jsx
-const user = {
-  name: "Alex",
-  age: 28
-};
+my-app/
+│
+├── src/
+│   ├── types.ts
+│   ├── greet.ts
+│   └── index.ts
+│
+├── package.json
+└── tsconfig.json
 
-// Later in the code...
-console.log(user.nme); // undefined (Easy typo to make!)
 ```
 
-***With TypeScript***
+## 1️⃣ src/types.ts
 ```jsx
-interface User {
+// Union Type
+export type Role = "admin" | "user";
+
+export type User = {
   name: string;
   age: number;
-}
+  role: Role;   // using union here
+};
+```
 
-const user: User = {
-  name: "Alex",
-  age: 28
+## 2️⃣ src/greet.ts
+```jsx
+import { User } from "./types";
+
+export function greet(user: User): string {
+  if (user.role === "admin") {
+    return `Welcome Admin ${user.name}`;
+  }
+
+  return `Hello ${user.name}, you are ${user.age} years old.`;
+}
+```
+
+## 3️⃣ src/index.ts
+```jsx
+import { greet } from "./greet";
+import { User } from "./types";
+
+const person: User = {
+  name: "Vishal",
+  age: 25,
+  role: "admin"   // must be "admin" or "user"
 };
 
-// console.log(user.nme); // ERROR: Property 'nme' does not exist on type 'User'.
+console.log(greet(person));
 ```
