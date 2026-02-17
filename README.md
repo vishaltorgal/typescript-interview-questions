@@ -14,7 +14,8 @@
 11. [What are union and intersection types?](#11-what-are-union-and-intersection-types)
 12. [Difference between readonly and const?](#12-difference-between-readonly-and-const)
 13. [What is as type assertion?](#13-what-is-as-type-assertion)
-14. [Example](#14-example)
+14. [API](#14-api)
+15. [Example](#15-example)
 
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
@@ -390,8 +391,86 @@ Here we tell TypeScript:
 ```jsx
 let str = value as string
 ```
+## 14. **API**
+let’s build a simple React + TypeScript API example step by step.
 
-## 14. **Example**
+1️⃣ Simple API Fetch Example (useEffect)
+```jsx
+import React, { useEffect, useState } from "react";
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export default function Users() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+
+        const data: User[] = await response.json();
+        setUsers(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+```
+
+2️⃣ Better Pattern: Create API Function Separately
+
+```jsx
+export async function getUsers(): Promise<User[]> {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch users");
+  }
+
+  return response.json();
+}
+```
+
+🚀 Even Better: Generic Fetch Utility
+```jsx
+export async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("API Error");
+  }
+
+  return response.json();
+}
+
+```
+Usage:
+```jsx
+const users = await fetchData<User[]>(url);
+```
+
+## 15. **Example**
 
 ### ***Example 1***
 
