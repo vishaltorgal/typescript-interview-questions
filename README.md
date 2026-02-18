@@ -94,7 +94,6 @@ function getArea(shape: Shape) {
 }
 ```
 
-
 ## 3. **How do you define an interface in TypeScript?**
 ```jsx
 interface User {
@@ -249,33 +248,59 @@ Only type supports tuples cleanly:
 type Coordinates = [number, number];
 ```
 
-🧠 Summary
-- Use **interface** when defining object shapes, especially for public APIs and class structures.
-- Use **type** when combining types (e.g., unions, intersections, primitives).
-  
-- Interfaces allow ***Declaration Merging***. If you define two interfaces with the same name, TypeScript automatically merges them into one.
-- ***Types*** do not allow this and will throw an error if you try to define the same name twice.
-
-```jsx
-// Interfaces merge
-interface User { name: string; }
-interface User { age: number; }
-// User now has both name and age
-
-// Types do not merge
-type Admin = { name: string; }
-type Admin = { role: string; } // Error: Duplicate identifier 'Admin'
-```
-
 <br>
 
 ## 6. **What is a union type?**
 Allows a variable to hold multiple types
 
+### 🔹 1️⃣ Basic Example
 ```jsx
-let value: string | number;
-value = "text";
-value = 10;
+let id: string | number;
+
+id = 10;        // ✅
+id = "ABC123";  // ✅
+id = true;      // ❌ Error
+```
+
+### 🔹 2️⃣ String Literal Union
+```jsx
+type Status = "success" | "error" | "loading";
+
+let currentStatus: Status = "success";  // ✅
+let s: Status = "pending";              // ❌ Error
+```
+
+### 🔹 3️⃣ Union with Objects
+```jsx
+type SuccessResponse = {
+  status: "success";
+  data: string;
+};
+
+type ErrorResponse = {
+  status: "error";
+  message: string;
+};
+
+type ApiResponse = SuccessResponse | ErrorResponse;
+```
+
+### 4️⃣ Union in Function Parameter
+```jsx
+function printId(id: string | number) {
+  console.log(id);
+}
+```
+
+### 🔥 6️⃣ Real React Example
+```jsx
+type Status = "loading" | "success" | "error";
+
+interface ApiState {
+  status: Status;
+  data?: string;
+  error?: string;
+}
 ```
 
 <br>
