@@ -12,10 +12,11 @@
 9. [What is keyof and typeof in TypeScript?](#9-what-is-keyof-and-typeof-in-typescript)
 10. [What is declaration merging in TypeScript?](#10-what-is-declaration-merging-in-typescript)
 11. [Intersection types?](#11-intersection-types)
-12. [Difference between readonly and const?](#12-difference-between-readonly-and-const)
-13. [What is as type assertion?](#13-what-is-as-type-assertion)
-14. [API](#14-api)
-15. [Example](#15-example)
+12. [Tuples](#12-tuples)
+13. [Difference between readonly and const?](#13-difference-between-readonly-and-const)
+14. [What is as type assertion?](#14-what-is-as-type-assertion)
+15. [API](#15-api)
+16. [Example](#16-example)
 
 
 ## 1. **Advantages of using TypeScript over JavaScript?**
@@ -507,7 +508,50 @@ Because salary is missing.
 
 <br>
 
-## 12. **Difference between readonly and const?**
+
+## 12. **Tuples**
+
+A tuple is:
+
+- 👉 A fixed length array
+- 👉 With fixed types at specific positions
+- 👉 Order matters
+
+
+### 🔹  Basic Tuple Example
+```jsx
+let user: [string, number];
+
+user = ["Vishal", 30];   // ✅ Correct
+user = [30, "Vishal"];   // ❌ Wrong order
+user = ["Vishal"];       // ❌ Missing value
+```
+
+### 🔹 Named Tuple (Better Readability)
+```jsx
+type User = [name: string, age: number];
+
+const user: User = ["Vishal", 30];
+```
+
+### 🔹 Optional Tuple Element
+```jsx
+type Data = [string, number?];
+
+const d1: Data = ["Hello"];        // ✅
+const d2: Data = ["Hello", 10];    // ✅
+```
+
+
+### 🔹 Function Returning Tuple
+```jsx
+function getUser(): [string, number] {
+  return ["Vishal", 30];
+}
+```
+
+
+## 13. **Difference between readonly and const?**
 
 - `const` prevents variable reassignment
 - `readonly` prevents property modification
@@ -522,7 +566,7 @@ interface User {
 
 <br>
 
-## 13. **What is as type assertion?**
+## 14. **What is as type assertion?**
 
 Forces TypeScript to treat a value as a specific type.
 
@@ -536,7 +580,7 @@ Here we tell TypeScript:
 ```jsx
 let str = value as string
 ```
-## 14. **API**
+## 15. **API**
 let’s build a simple React + TypeScript API example step by step.
 
 1️⃣ Simple API Fetch Example (useEffect)
