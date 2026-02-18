@@ -11,7 +11,7 @@
 8. [What are mapped types?](#8-what-are-mapped-types)
 9. [What is keyof and typeof in TypeScript?](#9-what-is-keyof-and-typeof-in-typescript)
 10. [What is declaration merging in TypeScript?](#10-what-is-declaration-merging-in-typescript)
-11. [What are union and intersection types?](#11-what-are-union-and-intersection-types)
+11. [Intersection types?](#11-intersection-types)
 12. [Difference between readonly and const?](#12-difference-between-readonly-and-const)
 13. [What is as type assertion?](#13-what-is-as-type-assertion)
 14. [API](#14-api)
@@ -292,7 +292,7 @@ function printId(id: string | number) {
 }
 ```
 
-### 🔥 6️⃣ Real React Example
+### 🔥 5️⃣ Real React Example
 ```jsx
 type Status = "loading" | "success" | "error";
 
@@ -320,9 +320,9 @@ identity<number>(10)
 identity<string>("hello")
 ```
 
-1️⃣ <T> - Declares a generic type parameter named T.
-2️⃣ value: T - Specifies that the parameter value must be of type T.
-3️⃣ : T - Specifies that the return value will also be of type T.
+- 1️⃣ <T> - Declares a generic type parameter named T.
+- 2️⃣ value: T - Specifies that the parameter value must be of type T.
+- 3️⃣ : T - Specifies that the return value will also be of type T.
 
 ***<T> defines the generic type, value: T accepts that type, and : T returns the same type.***
 
@@ -354,36 +354,47 @@ const firstString = getFirstElement(["a", "b", "c"]); // T = string
 
 ## 8. **What are mapped types?**
 
-Mapped types let you create new types by looping over the keys of an existing type and transforming them.
+A mapped type allows you to:
 
+- 👉 Create a new type
+- 👉 By transforming properties of an existing type
+- It loops over keys of a type.
+
+### 1️⃣ Basic Example
 ***normal type***
 ```jsx
 type User = {
-  id: number
-  name: string
-}
+  name: string;
+  age: number;
+};
+```
+Now suppose we want all properties optional.
+
+Instead of rewriting:
+
+```jsx
+type OptionalUser = {
+  name?: string;
+  age?: number;
+};
 ```
 
+We can use mapped type:
 ***Mapped type***
 ```jsx
-type ReadOnlyUser = {
-  readonly [K in keyof User]: User[K]
-}
+type OptionalUser = {
+  [Key in keyof User]?: User[Key];
+};
 ```
+✅ Automatically makes all properties optional.
+
 
 ***Read it in plain English***
-- `keyof User` → "id" | "name"
+- `keyof User` → "name" | "age"
 - `K in keyof User` → “for each key in User”
 - `User[K]` → “use the same type as original”
-- `readonly` → “make it read-only”
+- `?` → “make it optional”
 
-***👉 Result***
-```jsx
-{
-  readonly id: number
-  readonly name: string
-}
-```
 
 <br>
 
@@ -456,30 +467,43 @@ const person: User = {
 };
 ```
 
-## 11. **What are union and intersection types?**
+## 11. **intersection types**
 
-- Union (|) allows multiple types
-- Intersection (&) combines multiple types
+- 👉 Combine multiple types
+- 👉 The result must satisfy ALL types
+- 👉 It uses the & operator
 
-***Union***
+🔹 1️⃣ Basic Example
 ```jsx
-type Status = "success" | "error"
+type Person = {
+  name: string;
+};
+
+type Employee = {
+  salary: number;
+};
+
+type Staff = Person & Employee;
 ```
 
-***Intersection***
+Now Staff must have BOTH:
 ```jsx
-type Person = {  name: string}
-type Employee = { id: number}
+const user: Staff = {
+  name: "Vishal",
+  salary: 50000
+};
 
-type PersonEmployee = Person & Employee
 ```
-***Result***
+If you miss one:
 ```jsx
-{
-  name: string
-  id: number
-}
+const user: Staff = {
+  name: "Vishal"
+};
+
 ```
+❌ Error
+
+Because salary is missing.
 
 <br>
 
