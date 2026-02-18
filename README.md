@@ -143,52 +143,112 @@ const emp: Employee = {
 
 ## 4. **What is Type Inference?**
 
-***Type inference*** is TypeScript’s ability to automatically determine the type of a variable or expression without explicitly specifying it.
+Type Inference means:
+
+- 👉 TypeScript automatically guesses the type
+- 👉 You don’t have to explicitly write it
 
 When you assign a value to a variable, TypeScript infers the type based on the value.
 
+🔹 1️⃣ Basic Example
 ```jsx
-let message = "Hello, TypeScript";
-// TypeScript infers: message is of type string
+let name = "Vishal";
+```
+TypeScript infers:
+```jsx
+let name: string
+```
+You did not write string manually.
 
-// This will throw a compile-time error:
-message = 123; 
-// ❌ Error: Type 'number' is not assignable to type 'string'
+If you now do:
+```jsx
+name = 10;
+```
+❌ Error
+
+Because TypeScript already inferred it as string.
+
+
+### 🔹 Function Return Type Inference
+```jsx
+function add(a: number, b: number) {
+  return a + b;
+}
+```
+TypeScript automatically infers:
+```jsx
+function add(a: number, b: number): number
 ```
 
-
 ## 5. **Difference between interface and type?**
-Both define object shapes.
 
-interface is extendable and ideal for OOP-style code.
-
-type is more flexible, can represent unions, tuples, primitives, etc.
-
-Interfaces can be merged; types cannot.
+### 🔹 A. Declaration Merging
 
 ### ***interface Example***
 ```jsx
 interface User {
   name: string;
+}
+
+interface User {
   age: number;
 }
-
-interface Admin extends User {
-  isAdmin: boolean;
-}
 ```
-
-### ***type Example***
+This becomes:
 ```jsx
-type User = {
+{
   name: string;
   age: number;
+}
+```
+
+You cannot do this with type ❌
+
+```jsx
+type User = { name: string };
+type User = { age: number }; // Error
+```
+
+### 🔹 B. Extending
+
+### ***interface extends***
+```jsx
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  salary: number;
+}
+```
+
+### ***Type extends using intersection***
+```jsx
+type Person = {
+  name: string;
 };
 
-type Admin = User & {
-  isAdmin: boolean;
+type Employee = Person & {
+  salary: number;
 };
 ```
+
+### 🔹 C. Union Types
+
+```jsx
+type Status = "success" | "error" | "loading";
+```
+
+You cannot do this with interface.
+
+
+### 🔹 D. Tuples
+Only type supports tuples cleanly:
+
+```jsx
+type Coordinates = [number, number];
+```
+
 🧠 Summary
 - Use **interface** when defining object shapes, especially for public APIs and class structures.
 - Use **type** when combining types (e.g., unions, intersections, primitives).
