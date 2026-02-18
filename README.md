@@ -101,10 +101,46 @@ interface User {
   name: string;
   age: number;
   isAdmin?: boolean; // optional
+  readonly id: number; // You cannot change id after assignment
+}
+```
+### 🔹  Interface for Function
+```jsx
+interface AddFunction {
+  (a: number, b: number): number;
+}
+
+const add: AddFunction = (x, y) => x + y;
+```
+
+### 🔹 Interface with React Props
+```jsx
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+}
+
+function Button({ label, onClick }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>;
 }
 ```
 
-  
+### 🔹 Extending Interface
+```jsx
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  salary: number;
+}
+
+const emp: Employee = {
+  name: "Vishal",
+  salary: 50000,
+};
+```
+
 ## 4. **What is Type Inference?**
 
 ***Type inference*** is TypeScript’s ability to automatically determine the type of a variable or expression without explicitly specifying it.
@@ -469,7 +505,19 @@ Usage:
 ```jsx
 const users = await fetchData<User[]>(url);
 ```
+### 🚀 Real API Example
+```jsx
+interface ApiResponse {
+  id: number;
+  name: string;
+  email: string;
+}
 
+async function fetchUser(): Promise<ApiResponse> {
+  const res = await fetch("/api/user");
+  return res.json();
+}
+```
 ## 15. **Example**
 
 ### ***Example 1***
